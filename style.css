@@ -1,11 +1,8 @@
 /* 韓系溫柔配色與變數 */
 :root {
     --bg-color: #FAF8F5;
-    /* 燕麥白 */
     --text-color: #4A4036;
-    /* 灰褐色 */
     --accent-color: #D4BBA3;
-    /* 奶茶色 */
     --btn-hover: #C2A68D;
     --font-heading: 'Noto Serif TC', serif;
     --font-body: 'Noto Sans TC', sans-serif;
@@ -15,6 +12,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* 啟用平滑捲動，點擊導覽列時會有滑順的視覺體驗 */
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -33,7 +35,18 @@ h3,
     font-weight: 600;
 }
 
-/* ==================== 導覽列 ==================== */
+/* 共用容器設定 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ==================== 導覽列與漢堡選單 ==================== */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -53,16 +66,38 @@ h3,
     letter-spacing: 1px;
 }
 
+.navbar nav {
+    display: flex;
+    align-items: center;
+}
+
 .navbar nav a {
     color: var(--text-color);
     text-decoration: none;
-    margin-left: 25px;
+    margin-left: 30px;
     font-size: 0.95rem;
     transition: color 0.3s;
 }
 
 .navbar nav a:hover {
     color: var(--accent-color);
+}
+
+/* 漢堡按鈕 (電腦版隱藏) */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 1001;
+    /* 確保在選單上方 */
+}
+
+.hamburger span {
+    width: 25px;
+    height: 2px;
+    background-color: var(--text-color);
+    transition: all 0.3s ease;
 }
 
 /* 按鈕樣式 */
@@ -110,7 +145,111 @@ h3,
     margin-bottom: 35px;
 }
 
-/* ==================== 精選造型 - 橫式捲軸區塊 ==================== */
+/* ==================== 關於我 ==================== */
+.about-section {
+    padding: 120px 0;
+    background-color: #fff;
+}
+
+.layout-split {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+.about-image {
+    flex: 1;
+    position: relative;
+}
+
+.about-image::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--accent-color);
+    border-radius: 12px;
+    z-index: 0;
+}
+
+.about-image img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    border-radius: 12px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text h2 {
+    font-size: 2.8rem;
+    margin-bottom: 5px;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    color: #6D6358;
+    font-size: 1.05rem;
+    line-height: 1.9;
+}
+
+/* ==================== 品牌概念 ==================== */
+.concept-section {
+    padding: 120px 0;
+    background-color: var(--bg-color);
+}
+
+.concept-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.concept-item {
+    background: #fff;
+    padding: 50px 30px;
+    border-radius: 16px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+}
+
+.concept-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(212, 187, 163, 0.2);
+}
+
+.concept-icon {
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.concept-item h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.concept-item p {
+    color: #8C8276;
+    font-size: 0.95rem;
+}
+
+/* ==================== 作品集區塊 ==================== */
 .trending-section {
     padding: 100px 5%;
     background-color: #fff;
@@ -130,7 +269,6 @@ h3,
     letter-spacing: 2px;
 }
 
-/* 滑動提示文字樣式 */
 .scroll-hint {
     text-align: center;
     margin-bottom: 20px;
@@ -155,7 +293,6 @@ h3,
     }
 }
 
-/* ==================== 左右滑動按鈕 ==================== */
 .slider-wrapper {
     position: relative;
     display: flex;
@@ -196,7 +333,6 @@ h3,
     right: -20px;
 }
 
-/* ==================== 作品集容器與項目 ==================== */
 .item-group {
     display: flex;
     gap: 24px;
@@ -220,16 +356,13 @@ h3,
     min-width: 280px;
     width: 280px;
     flex-shrink: 0;
-    /* 防止圖片被擠壓 */
     scroll-snap-align: start;
     cursor: pointer;
-    /* 提示可點擊打開內頁 */
     transition: transform 0.3s ease;
 }
 
 .item:hover {
     transform: translateY(-5px);
-    /* 輕微上浮特效 */
 }
 
 .item img {
@@ -247,7 +380,7 @@ h3,
     letter-spacing: 1px;
 }
 
-/* ==================== 作品內頁彈窗 (Modal) ==================== */
+/* ==================== 彈窗與放大 ==================== */
 .modal-overlay,
 .lightbox-overlay {
     display: none;
@@ -328,7 +461,6 @@ h3,
     transform: scale(1.02);
 }
 
-/* ==================== 圖片放大預覽 (Lightbox) ==================== */
 .lightbox-overlay {
     background: rgba(0, 0, 0, 0.9);
     z-index: 3000;
@@ -347,14 +479,10 @@ h3,
     right: 30px;
 }
 
-/* ==================== 手機版響應式設計 ==================== */
+/* ==================== 手機版響應式設計 (加入漢堡選單邏輯) ==================== */
 @media (max-width: 768px) {
     .hero-content h1 {
         font-size: 3rem;
-    }
-
-    .navbar nav {
-        display: none;
     }
 
     .hero {
@@ -362,12 +490,73 @@ h3,
             url('https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800') center/cover;
     }
 
-    /* 手機版隱藏左右按鈕，靠手指滑動即可 */
+    .layout-split {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .about-image::before {
+        display: none;
+    }
+
+    .about-image img {
+        height: 400px;
+    }
+
+    .about-text h2 {
+        font-size: 2.2rem;
+    }
+
     .slide-btn {
         display: none;
     }
 
     .modal-content {
         padding: 30px 20px;
+    }
+
+    /* 漢堡選單與導覽列動畫設定 */
+    .hamburger {
+        display: flex;
+    }
+
+    .navbar nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(250, 248, 245, 0.98);
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+        /* 預設隱藏，使用 max-height 創造下拉動畫感 */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+    }
+
+    .navbar nav.active {
+        max-height: 350px;
+        padding: 20px 0;
+    }
+
+    .navbar nav a {
+        margin: 15px 0;
+        margin-left: 0;
+        font-size: 1.1rem;
+    }
+
+    /* 漢堡按鈕變為 X 的動畫 */
+    .hamburger.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
     }
 }

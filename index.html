@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hair Stylist | 韓系質感沙廊</title>
+    <title>Hair Stylist | 韓系質感沙龍</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400&display=swap"
       rel="stylesheet" />
@@ -12,18 +12,65 @@
   <body>
     <header class="navbar">
       <div class="logo">Maison de Hair</div>
-      <nav>
-        <a href="#about">關於</a>
-        <a href="#trending">精選</a>
-        <a href="#booking" class="btn-primary">線上預約</a>
+      
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu">
+        <a href="#about" class="nav-link">關於我</a>
+        <a href="#concept" class="nav-link">品牌概念</a>
+        <a href="#trending" class="nav-link">作品集</a>
+        <a href="#booking" class="btn-primary nav-link">線上預約</a>
       </nav>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="home">
       <div class="hero-content">
         <h1>Natural &<br />Elegant.</h1>
         <p>尋找屬於你的溫柔輪廓，打造不費力的日常精緻感。</p>
         <a href="#booking" class="btn-primary">預約諮詢</a>
+      </div>
+    </section>
+
+    <section id="about" class="about-section">
+      <div class="container layout-split">
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1595062584313-40a2bb1282ec?auto=format&fit=crop&w=800" alt="設計師介紹">
+        </div>
+        <div class="about-text">
+          <h2>About Me.</h2>
+          <p class="subtitle" style="text-align: left; margin-bottom: 20px;">嗨，我是 主理人 / 髮型設計師</p>
+          <p>擁有超過 10 年的美髮沙龍經驗。我始終相信，最好的髮型不是盲目追求流行，而是找到最契合你生活步調與個人氣質的那一種。</p>
+          <p>擅長透過細膩的溝通與輪廓分析，為你量身打造「回到家也能輕鬆整理」的日常美感。在這裡，你不只是來改變髮型，更是來享受一段放鬆的專屬時光。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="concept" class="concept-section">
+      <div class="container text-center">
+        <h2>Our Philosophy.</h2>
+        <p class="subtitle">Maison de Hair 的三大堅持</p>
+        
+        <div class="concept-grid">
+          <div class="concept-item">
+            <span class="concept-icon">✦</span>
+            <h3>Natural<br>自然</h3>
+            <p>追求宛若天生的自然弧度，捨棄刻意生硬的線條，展現毫不費力的精緻感。</p>
+          </div>
+          <div class="concept-item">
+            <span class="concept-icon">✧</span>
+            <h3>Care<br>呵護</h3>
+            <p>嚴選低敏、溫和的沙龍級髮品，在變美的同時，也給予頭皮與髮絲最極致的照顧。</p>
+          </div>
+          <div class="concept-item">
+            <span class="concept-icon">✦</span>
+            <h3>Tailored<br>客製</h3>
+            <p>拒絕複製貼上。從臉型、髮性到穿搭風格，為你進行全方位的客製化提案。</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -55,20 +102,37 @@
 
     <div id="lightbox" class="lightbox-overlay">
       <button class="close-btn" id="closeLightbox">×</button>
-      <img id="lightboxImg" src="" alt="放大預覽" />
+      <img id="lightboxImg" src="" alt="放大預覽">
     </div>
-
+    
     <script>
-      // 全域變數，用來存放 fetch 下來的 JSON 資料
+      // --- 1. 漢堡選單邏輯 ---
+      const hamburger = document.getElementById('hamburger');
+      const navMenu = document.getElementById('nav-menu');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      // 點擊漢堡按鈕展開/收合選單
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+
+      // 點擊選單項目後，自動收合選單 (提升手機版體驗)
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navMenu.classList.remove('active');
+        });
+      });
+
+      // --- 2. JSON 作品集讀取與渲染 ---
       let globalPortfolioData = [];
 
-      // 1. 建立渲染函數
       function renderPortfolio(data) {
         const container = document.getElementById("portfolio-container");
         container.innerHTML = "";
 
         data.forEach((item) => {
-          // 【更新】加上 onclick 事件，點擊時觸發打開內頁並傳入 ID
           const htmlString = `
                 <div class="item" onclick="openModal(${item.id})">
                     <img src="${item.imgSrc}" alt="${item.altText || item.title}">
@@ -79,17 +143,12 @@
         });
       }
 
-      // 2. 建立讀取 JSON 的非同步函數
       async function loadPortfolioData() {
         try {
           const response = await fetch("data.json");
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
           const data = await response.json();
-          globalPortfolioData = data; // 將資料存入全域變數，供內頁使用
+          globalPortfolioData = data; 
           renderPortfolio(data);
         } catch (error) {
           console.error("無法讀取作品集資料:", error);
@@ -98,12 +157,11 @@
         }
       }
 
-      // 3. 網頁載入時執行讀取函數
       document.addEventListener("DOMContentLoaded", () => {
         loadPortfolioData();
       });
 
-      // 4. 滑鼠拖曳功能 (維持你的原設定)
+      // --- 3. 橫向捲軸滑鼠拖曳邏輯 ---
       const slider = document.getElementById("portfolio-container");
       let isDown = false;
       let startX;
@@ -114,15 +172,8 @@
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
       });
-
-      slider.addEventListener("mouseleave", () => {
-        isDown = false;
-      });
-
-      slider.addEventListener("mouseup", () => {
-        isDown = false;
-      });
-
+      slider.addEventListener("mouseleave", () => { isDown = false; });
+      slider.addEventListener("mouseup", () => { isDown = false; });
       slider.addEventListener("mousemove", (e) => {
         if (!isDown) return;
         e.preventDefault();
@@ -131,83 +182,72 @@
         slider.scrollLeft = scrollLeft - walk;
       });
 
-      // ==================== 【新增】5. 左右滑動按鈕邏輯 ====================
+      // --- 4. 電腦版左右按鈕點擊滑動 ---
       const prevBtn = document.getElementById("slidePrev");
       const nextBtn = document.getElementById("slideNext");
-      const scrollAmount = 304; // 每次滑動距離
+      const scrollAmount = 304; 
 
       if (prevBtn && nextBtn) {
         prevBtn.addEventListener("click", () => {
           slider.scrollBy({ left: -scrollAmount, behavior: "smooth" });
         });
-
         nextBtn.addEventListener("click", () => {
           slider.scrollBy({ left: scrollAmount, behavior: "smooth" });
         });
       }
 
-      // ==================== 【新增】6. 內頁彈窗 (Modal) 與放大 (Lightbox) 邏輯 ====================
-      const modal = document.getElementById("portfolioModal");
-      const lightbox = document.getElementById("lightbox");
+      // --- 5. 內頁彈窗 (Modal) 與放大預覽 (Lightbox) ---
+      const modal = document.getElementById('portfolioModal');
+      const lightbox = document.getElementById('lightbox');
 
-      // 打開內頁
       function openModal(id) {
-        const itemData = globalPortfolioData.find((item) => item.id === id);
+        const itemData = globalPortfolioData.find(item => item.id === id);
         if (!itemData) return;
 
-        // 寫入標題與描述
-        document.getElementById("modalTitle").textContent = itemData.title;
-        document.getElementById("modalDesc").textContent =
-          itemData.description || "暫無說明";
+        document.getElementById('modalTitle').textContent = itemData.title;
+        document.getElementById('modalDesc').textContent = itemData.description || '暫無說明';
 
-        // 寫入並渲染畫廊圖片
-        const galleryContainer = document.getElementById("modalGallery");
-        galleryContainer.innerHTML = ""; // 先清空舊內容
-
+        const galleryContainer = document.getElementById('modalGallery');
+        galleryContainer.innerHTML = ''; 
+        
         if (itemData.gallery && Array.isArray(itemData.gallery)) {
-          itemData.gallery.forEach((imgUrl) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = imgUrl;
-            // 點擊內頁圖片時放大
-            imgElement.onclick = (e) => {
-              e.stopPropagation(); // 阻止事件冒泡
-              openLightbox(imgUrl);
-            };
-            galleryContainer.appendChild(imgElement);
-          });
+            itemData.gallery.forEach(imgUrl => {
+                const imgElement = document.createElement('img');
+                imgElement.src = imgUrl;
+                imgElement.onclick = (e) => {
+                    e.stopPropagation(); 
+                    openLightbox(imgUrl); 
+                };
+                galleryContainer.appendChild(imgElement);
+            });
         }
-
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden"; // 鎖定背景不讓它跟著滾動
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; 
       }
 
-      // 關閉內頁
-      document.getElementById("closeModal").onclick = () => {
-        modal.classList.remove("active");
-        document.body.style.overflow = "auto"; // 解除背景滾動鎖定
-      };
+      document.getElementById('closeModal').onclick = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto'; 
+      }
 
-      // 打開放大預覽
       function openLightbox(imgUrl) {
-        document.getElementById("lightboxImg").src = imgUrl;
-        lightbox.classList.add("active");
+        document.getElementById('lightboxImg').src = imgUrl;
+        lightbox.classList.add('active');
       }
 
-      // 關閉放大預覽
-      document.getElementById("closeLightbox").onclick = () => {
-        lightbox.classList.remove("active");
-      };
+      document.getElementById('closeLightbox').onclick = () => {
+        lightbox.classList.remove('active');
+      }
 
-      // 點擊灰暗背景也能關閉視窗 (提升 UX)
       window.onclick = (e) => {
         if (e.target === modal) {
-          modal.classList.remove("active");
-          document.body.style.overflow = "auto";
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
         if (e.target === lightbox) {
-          lightbox.classList.remove("active");
+            lightbox.classList.remove('active');
         }
-      };
+      }
     </script>
   </body>
 </html>
