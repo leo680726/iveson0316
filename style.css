@@ -90,7 +90,6 @@ h3,
     gap: 6px;
     cursor: pointer;
     z-index: 1001;
-    /* 確保在選單上方 */
 }
 
 .hamburger span {
@@ -216,7 +215,6 @@ h3,
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
     margin-top: 40px;
-    /* 原本是 50px，改為 40px */
 }
 
 .concept-item {
@@ -480,6 +478,24 @@ h3,
     right: 30px;
 }
 
+/* ==================== 彈窗內的放大提示 ==================== */
+.zoom-hint {
+    font-size: 0.85rem;
+    color: #A99E93;
+    margin-bottom: 15px;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.8;
+}
+
+.zoom-hint svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+}
+
 /* ==================== 浮動按鈕 (社群與回到頁頂) ==================== */
 .floating-widgets {
     position: fixed;
@@ -489,7 +505,6 @@ h3,
     flex-direction: column;
     gap: 15px;
     z-index: 1000;
-    /* 確保浮在最上層 */
 }
 
 .widget-btn {
@@ -509,7 +524,6 @@ h3,
     backdrop-filter: blur(5px);
 }
 
-/* SVG 圖示大小控制 */
 .widget-btn svg {
     width: 20px;
     height: 20px;
@@ -520,19 +534,15 @@ h3,
     background-color: var(--accent-color);
     color: #fff;
     transform: translateY(-4px);
-    /* 懸停時微微上浮 */
     border-color: var(--accent-color);
     box-shadow: 0 8px 15px rgba(212, 187, 163, 0.4);
 }
 
-/* 回到頁頂按鈕：預設隱藏，透過 JS 加入 .show 類別來顯示 */
 .top-btn {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    /* 隱藏時不可點擊 */
     margin-top: 10px;
-    /* 和社群按鈕稍微拉開一點距離 */
 }
 
 .top-btn.show {
@@ -541,30 +551,10 @@ h3,
     pointer-events: auto;
 }
 
-/* ==================== 彈窗內的放大提示 ==================== */
-.zoom-hint {
-    font-size: 0.85rem;
-    color: #A99E93;
-    /* 配合韓系的淡褐色 */
-    margin-bottom: 15px;
-    letter-spacing: 1.5px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    opacity: 0.8;
-}
-
-.zoom-hint svg {
-    width: 14px;
-    height: 14px;
-    stroke: currentColor;
-}
-
 /* ==================== 線上預約 (Booking) ==================== */
 .booking-section {
     padding: 120px 0;
     background-color: var(--bg-color);
-    /* 燕麥白背景 */
 }
 
 .booking-text {
@@ -658,20 +648,10 @@ h3,
     cursor: pointer;
 }
 
-/* --- 手機版表單微調 --- */
-/* 請把這段加入你現有的 @media (max-width: 768px) 裡面 */
+/* ==================== 手機版響應式設計 (完美合併版) ==================== */
 @media (max-width: 768px) {
-    .booking-form-wrapper {
-        padding: 25px 20px;
-    }
 
-    .form-row {
-        flex-direction: column;
-        gap: 20px;
-    }
-}
-/* ==================== 手機版響應式設計 (加入漢堡選單邏輯) ==================== */
-@media (max-width: 768px) {
+    /* 主視覺 */
     .hero-content h1 {
         font-size: 3rem;
     }
@@ -681,6 +661,7 @@ h3,
             url('https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800') center/cover;
     }
 
+    /* 關於我與排版 */
     .layout-split {
         flex-direction: column;
         gap: 40px;
@@ -698,6 +679,7 @@ h3,
         font-size: 2.2rem;
     }
 
+    /* 作品集 */
     .slide-btn {
         display: none;
     }
@@ -706,7 +688,37 @@ h3,
         padding: 30px 20px;
     }
 
-    /* 漢堡選單與導覽列動畫設定 */
+    /* 預約表單微調 */
+    .booking-section {
+        padding: 60px 0;
+    }
+
+    .booking-text h2 {
+        font-size: 2.2rem;
+    }
+
+    .booking-info {
+        margin-top: 25px;
+        padding-top: 20px;
+    }
+
+    .booking-form-wrapper {
+        padding: 30px 20px;
+        margin-top: 10px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-submit-btn {
+        padding: 16px;
+        font-size: 1.15rem;
+        border-radius: 8px;
+    }
+
+    /* 導覽列與漢堡選單動畫 */
     .hamburger {
         display: flex;
     }
@@ -721,7 +733,6 @@ h3,
         align-items: center;
         padding: 0;
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
-        /* 預設隱藏，使用 max-height 創造下拉動畫感 */
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
@@ -738,7 +749,6 @@ h3,
         font-size: 1.1rem;
     }
 
-    /* 漢堡按鈕變為 X 的動畫 */
     .hamburger.active span:nth-child(1) {
         transform: translateY(8px) rotate(45deg);
     }
@@ -751,19 +761,20 @@ h3,
         transform: translateY(-8px) rotate(-45deg);
     }
 
+    /* 浮動按鈕 */
     .floating-widgets {
-            bottom: 20px;
-            right: 20px;
-            gap: 10px;
+        bottom: 20px;
+        right: 20px;
+        gap: 10px;
     }
-    
+
     .widget-btn {
-            width: 40px;
-            height: 40px;
+        width: 40px;
+        height: 40px;
     }
-    
+
     .widget-btn svg {
-            width: 18px;
-            height: 18px;
-     }
+        width: 18px;
+        height: 18px;
+    }
 }
