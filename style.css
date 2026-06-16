@@ -560,6 +560,116 @@ h3,
     stroke: currentColor;
 }
 
+/* ==================== 線上預約 (Booking) ==================== */
+.booking-section {
+    padding: 120px 0;
+    background-color: var(--bg-color);
+    /* 燕麥白背景 */
+}
+
+.booking-text {
+    flex: 1;
+}
+
+.booking-text h2 {
+    font-size: 2.8rem;
+    margin-bottom: 5px;
+}
+
+.booking-text p {
+    color: #6D6358;
+    line-height: 1.8;
+}
+
+.booking-info {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #E5E0DA;
+}
+
+.booking-info p {
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.booking-form-wrapper {
+    flex: 1;
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.booking-form label {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.booking-form input,
+.booking-form select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #E5E0DA;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: #FAFAFA;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: var(--font-body);
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(212, 187, 163, 0.2);
+    background-color: #fff;
+}
+
+.form-submit-btn {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-size: 1.1rem;
+    padding: 15px;
+    cursor: pointer;
+}
+
+/* --- 手機版表單微調 --- */
+/* 請把這段加入你現有的 @media (max-width: 768px) 裡面 */
+@media (max-width: 768px) {
+    .booking-form-wrapper {
+        padding: 25px 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
 /* ==================== 手機版響應式設計 (加入漢堡選單邏輯) ==================== */
 @media (max-width: 768px) {
     .hero-content h1 {

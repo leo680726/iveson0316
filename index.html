@@ -101,7 +101,59 @@
         <button class="slide-btn next-btn" id="slideNext">❯</button>
       </div>
     </section>
+</section> <section id="booking" class="booking-section">
+      <div class="container layout-split">
+        <div class="booking-text">
+          <h2>Book an Appointment.</h2>
+          <p class="subtitle" style="text-align: left; margin-bottom: 20px;">預約專屬你的美髮時光</p>
+          <p>為了提供最完善的服務品質，我們採全預約制。<br>請填寫右方表單，送出後系統會自動連結至我們的 LINE 官方帳號，為您進行最終確認。</p>
+          
+          <div class="booking-info">
+            <p><strong>營業時間：</strong> 11:00 - 20:00 (每週一公休)</p>
+            <p><strong>沙龍地址：</strong> 屏東市某某路 XXX 號</p>
+          </div>
+        </div>
 
+        <div class="booking-form-wrapper">
+          <form id="bookingForm" class="booking-form">
+            <div class="form-group">
+              <label for="name">姓名 / 稱呼</label>
+              <input type="text" id="name" required placeholder="請輸入您的姓名">
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">聯絡電話</label>
+              <input type="tel" id="phone" required placeholder="09XX-XXX-XXX">
+            </div>
+
+            <div class="form-group">
+              <label for="service">服務項目</label>
+              <select id="service" required>
+                <option value="" disabled selected>請選擇您需要的服務</option>
+                <option value="洗髮＋精緻剪髮">洗髮＋精緻剪髮</option>
+                <option value="韓系質感溫塑燙">韓系質感溫塑燙</option>
+                <option value="客製化光澤染髮">客製化光澤染髮</option>
+                <option value="深層結構式護髮">深層結構式護髮</option>
+                <option value="現場與設計師討論">現場與設計師討論</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="date">預約日期</label>
+                <input type="date" id="date" required>
+              </div>
+              <div class="form-group">
+                <label for="time">預約時間</label>
+                <input type="time" id="time" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary form-submit-btn">傳送預約至 LINE</button>
+          </form>
+        </div>
+      </div>
+    </section>
     <div id="portfolioModal" class="modal-overlay">
       <div class="modal-content">
         <button class="close-btn" id="closeModal">×</button>
@@ -327,6 +379,41 @@
       // 點擊回到頁頂
       backToTopBtn.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+// ==================== 【新增】7. 表單送出並轉跳 LINE 邏輯 ====================
+      const bookingForm = document.getElementById('bookingForm');
+
+      bookingForm.addEventListener('submit', function(event) {
+        // 阻止表單預設的重整送出行為
+        event.preventDefault();
+
+        // 1. 取得使用者填寫的資料
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const service = document.getElementById('service').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+
+        // 2. 將資料組合成 LINE 的文字訊息格式
+        const lineMessage = `【預約需求】\n姓名：${name}\n電話：${phone}\n項目：${service}\n日期：${date}\n時間：${time}\n\n您好，我想預約以上時段，再麻煩幫我確認是否可以，謝謝！`;
+
+        // 3. 將文字進行 URL 編碼 (確保中文和符號能正確傳輸)
+        const encodedMessage = encodeURIComponent(lineMessage);
+
+        // 4. 設定 LINE 官方帳號的 ID (請替換成朋友沙龍的 LINE ID)
+        // 注意：官方帳號 ID 通常開頭有 @，例如 @1234abcd
+        const lineID = '@你的LINE官方帳號ID'; 
+
+        // 5. 組合最終的 LINE 喚醒網址
+        // 若使用官方帳號，語法為: https://line.me/R/oaMessage/{LINE_ID}/?{文字}
+        const lineURL = `https://line.me/R/oaMessage/${lineID}/?${encodedMessage}`;
+
+        // 若設計師沒有官方帳號，只有「個人 LINE」，請改用以下通用分享網址：
+        // const lineURL = `https://line.me/R/msg/text/?${encodedMessage}`;
+
+        // 6. 新開分頁轉跳至 LINE
+        window.open(lineURL, '_blank');
       });
     </script>
   </body>
