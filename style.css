@@ -124,6 +124,55 @@ h3,
     margin-bottom: 5px;
 }
 
+/* 加入在原本的 style.css 中 */
+
+/* 滑動提示文字樣式 */
+.scroll-hint {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #A99E93;
+    /* 配合韓系質感的淡褐色 */
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    animation: pulse 2s infinite;
+    /* 呼吸燈動畫 */
+    user-select: none;
+    /* 防止使用者誤選文字 */
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.4;
+    }
+}
+
+/* 優化橫向捲軸容器 */
+.item-group {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* 新增：讓電腦版滑鼠靠上去時顯示小手抓取圖示 */
+    cursor: grab;
+}
+
+/* 新增：當滑鼠點擊拖曳時，游標變成抓緊的狀態 */
+.item-group:active {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    /* 拖曳時暫時取消吸附感，會更滑順 */
+}
+
 .subtitle {
     text-align: center;
     color: #8C8276;
