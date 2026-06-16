@@ -147,7 +147,7 @@ h3,
 
 /* ==================== 關於我 ==================== */
 .about-section {
-    padding: 120px 0;
+    padding: 80px 0;
     background-color: #fff;
 }
 
@@ -202,7 +202,7 @@ h3,
 
 /* ==================== 品牌概念 ==================== */
 .concept-section {
-    padding: 120px 0;
+    padding: 80px 0;
     background-color: var(--bg-color);
 }
 
@@ -215,7 +215,8 @@ h3,
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
-    margin-top: 50px;
+    margin-top: 40px;
+    /* 原本是 50px，改為 40px */
 }
 
 .concept-item {
@@ -251,7 +252,7 @@ h3,
 
 /* ==================== 作品集區塊 ==================== */
 .trending-section {
-    padding: 100px 5%;
+    padding: 80px 5%;
     background-color: #fff;
 }
 
