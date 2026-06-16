@@ -33,7 +33,7 @@ h3,
     font-weight: 600;
 }
 
-/* 導覽列 */
+/* ==================== 導覽列 ==================== */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -71,7 +71,6 @@ h3,
     color: #fff !important;
     padding: 10px 24px;
     border-radius: 25px;
-    /* 韓系喜歡圓潤的按鈕 */
     font-weight: 400;
     display: inline-block;
     transition: all 0.3s ease;
@@ -84,13 +83,12 @@ h3,
     box-shadow: 0 4px 12px rgba(212, 187, 163, 0.4);
 }
 
-/* 主視覺 */
+/* ==================== 主視覺 ==================== */
 .hero {
     height: 100vh;
     display: flex;
     align-items: center;
     padding: 0 5%;
-    /* 使用較為明亮、空氣感的背景圖 */
     background: linear-gradient(to right, rgba(250, 248, 245, 0.9) 40%, rgba(250, 248, 245, 0.2)),
         url('https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1920') center/cover;
 }
@@ -112,7 +110,7 @@ h3,
     margin-bottom: 35px;
 }
 
-/* 精選造型 - 橫式捲軸區塊 */
+/* ==================== 精選造型 - 橫式捲軸區塊 ==================== */
 .trending-section {
     padding: 100px 5%;
     background-color: #fff;
@@ -124,20 +122,23 @@ h3,
     margin-bottom: 5px;
 }
 
-/* 加入在原本的 style.css 中 */
+.subtitle {
+    text-align: center;
+    color: #8C8276;
+    margin-bottom: 40px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
 
 /* 滑動提示文字樣式 */
 .scroll-hint {
     text-align: center;
     margin-bottom: 20px;
     color: #A99E93;
-    /* 配合韓系質感的淡褐色 */
     font-size: 0.85rem;
     letter-spacing: 2px;
     animation: pulse 2s infinite;
-    /* 呼吸燈動畫 */
     user-select: none;
-    /* 防止使用者誤選文字 */
 }
 
 @keyframes pulse {
@@ -154,7 +155,48 @@ h3,
     }
 }
 
-/* 優化橫向捲軸容器 */
+/* ==================== 左右滑動按鈕 ==================== */
+.slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.slide-btn {
+    background: rgba(255, 255, 255, 0.9);
+    color: #4A4036;
+    border: 1px solid #E5E0DA;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.slide-btn:hover {
+    background: #4A4036;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.prev-btn {
+    left: -20px;
+}
+
+.next-btn {
+    right: -20px;
+}
+
+/* ==================== 作品集容器與項目 ==================== */
 .item-group {
     display: flex;
     gap: 24px;
@@ -162,46 +204,32 @@ h3,
     padding-bottom: 20px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    /* 新增：讓電腦版滑鼠靠上去時顯示小手抓取圖示 */
     cursor: grab;
 }
 
-/* 新增：當滑鼠點擊拖曳時，游標變成抓緊的狀態 */
-.item-group:active {
-    cursor: grabbing;
-    scroll-snap-type: none;
-    /* 拖曳時暫時取消吸附感，會更滑順 */
-}
-
-.subtitle {
-    text-align: center;
-    color: #8C8276;
-    margin-bottom: 40px;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-}
-
-/* 橫向捲軸實作 */
-.item-group {
-    display: flex;
-    gap: 24px;
-    overflow-x: auto;
-    /* 啟用橫向滾動 */
-    padding-bottom: 20px;
-    scroll-snap-type: x mandatory;
-    /* 讓滑動有吸附感 */
-    -webkit-overflow-scrolling: touch;
-}
-
-/* 隱藏捲軸條，讓畫面更乾淨 */
 .item-group::-webkit-scrollbar {
     display: none;
 }
 
+.item-group:active {
+    cursor: grabbing;
+    scroll-snap-type: none;
+}
+
 .item {
     min-width: 280px;
-    /* 控制每個項目的寬度 */
+    width: 280px;
+    flex-shrink: 0;
+    /* 防止圖片被擠壓 */
     scroll-snap-align: start;
+    cursor: pointer;
+    /* 提示可點擊打開內頁 */
+    transition: transform 0.3s ease;
+}
+
+.item:hover {
+    transform: translateY(-5px);
+    /* 輕微上浮特效 */
 }
 
 .item img {
@@ -209,7 +237,6 @@ h3,
     height: 350px;
     object-fit: cover;
     border-radius: 12px;
-    /* 溫和的圓角 */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
     margin-bottom: 15px;
 }
@@ -220,7 +247,107 @@ h3,
     letter-spacing: 1px;
 }
 
-/* 手機版響應式設計 */
+/* ==================== 作品內頁彈窗 (Modal) ==================== */
+.modal-overlay,
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(250, 248, 245, 0.95);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active,
+.lightbox-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow-y: auto;
+    padding: 40px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #A99E93;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #4A4036;
+}
+
+.modal-body h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #4A4036;
+}
+
+.modal-body p {
+    color: #6D6358;
+    margin-bottom: 30px;
+    font-size: 1.05rem;
+}
+
+.modal-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.modal-gallery img {
+    width: 100%;
+    border-radius: 8px;
+    cursor: zoom-in;
+    transition: transform 0.3s;
+}
+
+.modal-gallery img:hover {
+    transform: scale(1.02);
+}
+
+/* ==================== 圖片放大預覽 (Lightbox) ==================== */
+.lightbox-overlay {
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 3000;
+}
+
+.lightbox-overlay img {
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-overlay .close-btn {
+    color: #fff;
+    top: 20px;
+    right: 30px;
+}
+
+/* ==================== 手機版響應式設計 ==================== */
 @media (max-width: 768px) {
     .hero-content h1 {
         font-size: 3rem;
@@ -233,5 +360,14 @@ h3,
     .hero {
         background: linear-gradient(to bottom, rgba(250, 248, 245, 0.8) 50%, rgba(250, 248, 245, 0.3)),
             url('https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800') center/cover;
+    }
+
+    /* 手機版隱藏左右按鈕，靠手指滑動即可 */
+    .slide-btn {
+        display: none;
+    }
+
+    .modal-content {
+        padding: 30px 20px;
     }
 }

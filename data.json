@@ -1,0 +1,60 @@
+[
+    {
+        "id": 1,
+        "imgSrc": "https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?auto=format&fit=crop&w=400",
+        "title": "韓系木馬捲",
+        "description": "木馬捲是一種強調立體感與空氣感的捲度，非常適合髮量較少或希望頭型看起來更飽滿的客群。搭配燕麥奶茶色，整體更顯輕盈溫柔。整理方式非常簡單，只需在吹乾時用手指輕輕繞吹即可。",
+        "gallery": [
+            "https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=800"
+        ]
+    },
+    {
+        "id": 2,
+        "imgSrc": "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=400",
+        "title": "慵懶氣墊燙",
+        "description": "氣墊燙的重點在於髮根的蓬鬆度與髮尾自然的彎度，宛如剛睡醒般的慵懶感，是許多韓國女星的指定造型。",
+        "gallery": [
+            "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=800"
+        ]
+    },
+    {
+        "id": 3,
+        "imgSrc": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400",
+        "title": "質感茶棕色",
+        "description": "不需漂髮也能擁有的極致質感！茶棕色在室內顯得低調內斂，在陽光下則會透出溫柔的茶色光澤，極度顯白且不怕布丁頭。",
+        "gallery": [
+            "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800"
+        ]
+    },
+    {
+        "id": 4,
+        "imgSrc": "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=400",
+        "title": "輕盈層次剪",
+        "description": "透過精準的層次落點，修飾臉部輪廓（如顴骨、下顎線），讓整體髮型看起來更加輕盈俐落，充滿率性的個人風格。",
+        "gallery": [
+            "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=800"
+        ]
+    },
+    {
+        "id": 5,
+        "imgSrc": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400",
+        "title": "質感茶棕色",
+        "description": "不需漂髮也能擁有的極致質感！茶棕色在室內顯得低調內斂，在陽光下則會透出溫柔的茶色光澤，極度顯白且不怕布丁頭。",
+        "gallery": [
+            "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800"
+        ]
+    },
+     {
+        "id": 6,
+        "imgSrc": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400",
+        "title": "質感茶棕色",
+        "description": "不需漂髮也能擁有的極致質感！茶棕色在室內顯得低調內斂，在陽光下則會透出溫柔的茶色光澤，極度顯白且不怕布丁頭。",
+        "gallery": [
+            "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800"
+        ]
+    }
+]

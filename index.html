@@ -1,89 +1,213 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hair Stylist | 韓系質感沙龍</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hair Stylist | 韓系質感沙廊</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header class="navbar">
-        <div class="logo">Maison de Hair</div>
-        <nav>
-            <a href="#about">關於</a>
-            <a href="#trending">精選</a>
-            <a href="#booking" class="btn-primary">線上預約</a>
-        </nav>
+      <div class="logo">Maison de Hair</div>
+      <nav>
+        <a href="#about">關於</a>
+        <a href="#trending">精選</a>
+        <a href="#booking" class="btn-primary">線上預約</a>
+      </nav>
     </header>
 
     <section class="hero">
-        <div class="hero-content">
-            <h1>Natural &<br>Elegant.</h1>
-            <p>尋找屬於你的溫柔輪廓，打造不費力的日常精緻感。</p>
-            <a href="#booking" class="btn-primary">預約諮詢</a>
-        </div>
+      <div class="hero-content">
+        <h1>Natural &<br />Elegant.</h1>
+        <p>尋找屬於你的溫柔輪廓，打造不費力的日常精緻感。</p>
+        <a href="#booking" class="btn-primary">預約諮詢</a>
+      </div>
     </section>
 
     <section id="trending" class="trending-section">
-        <h2>Trending Styles</h2>
-        <p class="subtitle">本季推薦韓系燙染風格</p>
-        
-        <div class="scroll-hint">
+      <h2>Trending Styles</h2>
+      <p class="subtitle">本季推薦韓系燙染風格</p>
+
+      <div class="scroll-hint">
         <span>← 左右滑動觀看更多 →</span>
+      </div>
+
+      <div class="slider-wrapper">
+        <button class="slide-btn prev-btn" id="slidePrev">❮</button>
+        <div class="item-group" id="portfolio-container"></div>
+        <button class="slide-btn next-btn" id="slideNext">❯</button>
+      </div>
+    </section>
+
+    <div id="portfolioModal" class="modal-overlay">
+      <div class="modal-content">
+        <button class="close-btn" id="closeModal">×</button>
+        <div class="modal-body">
+          <h3 id="modalTitle">標題</h3>
+          <p id="modalDesc">描述文字</p>
+          <div class="modal-gallery" id="modalGallery"></div>
+        </div>
+      </div>
     </div>
 
-        <div class="item-group">
-            <div class="item">
-                <img src="https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?auto=format&fit=crop&w=400" alt="木馬捲">
-                <p>韓系木馬捲</p>
-            </div>
-            <div class="item">
-                <img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=400" alt="氣墊燙">
-                <p>慵懶氣墊燙</p>
-            </div>
-            <div class="item">
-                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400" alt="耳圈染">
-                <p>質感茶棕色</p>
-            </div>
-            <div class="item">
-                <img src="https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=400" alt="層次剪">
-                <p>輕盈層次剪</p>
-            </div>
-        </div>
-    </section>
-<script>
-    const slider = document.querySelector('.item-group');
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+    <div id="lightbox" class="lightbox-overlay">
+      <button class="close-btn" id="closeLightbox">×</button>
+      <img id="lightboxImg" src="" alt="放大預覽" />
+    </div>
 
-    // 滑鼠按下去
-    slider.addEventListener('mousedown', (e) => {
+    <script>
+      // 全域變數，用來存放 fetch 下來的 JSON 資料
+      let globalPortfolioData = [];
+
+      // 1. 建立渲染函數
+      function renderPortfolio(data) {
+        const container = document.getElementById("portfolio-container");
+        container.innerHTML = "";
+
+        data.forEach((item) => {
+          // 【更新】加上 onclick 事件，點擊時觸發打開內頁並傳入 ID
+          const htmlString = `
+                <div class="item" onclick="openModal(${item.id})">
+                    <img src="${item.imgSrc}" alt="${item.altText || item.title}">
+                    <p>${item.title}</p>
+                </div>
+            `;
+          container.insertAdjacentHTML("beforeend", htmlString);
+        });
+      }
+
+      // 2. 建立讀取 JSON 的非同步函數
+      async function loadPortfolioData() {
+        try {
+          const response = await fetch("data.json");
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          globalPortfolioData = data; // 將資料存入全域變數，供內頁使用
+          renderPortfolio(data);
+        } catch (error) {
+          console.error("無法讀取作品集資料:", error);
+          document.getElementById("portfolio-container").innerHTML =
+            '<p style="text-align:center;">作品載入失敗，請稍後再試。</p>';
+        }
+      }
+
+      // 3. 網頁載入時執行讀取函數
+      document.addEventListener("DOMContentLoaded", () => {
+        loadPortfolioData();
+      });
+
+      // 4. 滑鼠拖曳功能 (維持你的原設定)
+      const slider = document.getElementById("portfolio-container");
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      slider.addEventListener("mousedown", (e) => {
         isDown = true;
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
-    });
+      });
 
-    // 滑鼠離開範圍
-    slider.addEventListener('mouseleave', () => {
+      slider.addEventListener("mouseleave", () => {
         isDown = false;
-    });
+      });
 
-    // 滑鼠放開
-    slider.addEventListener('mouseup', () => {
+      slider.addEventListener("mouseup", () => {
         isDown = false;
-    });
+      });
 
-    // 滑鼠移動 (拖曳中)
-    slider.addEventListener('mousemove', (e) => {
-        if (!isDown) return; // 如果沒有按住就停止執行
+      slider.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 1.5; // 數字 1.5 是滑動的靈敏度，可依喜好調整
+        const walk = (x - startX) * 1.5;
         slider.scrollLeft = scrollLeft - walk;
-    });
-</script>
-</body>
+      });
+
+      // ==================== 【新增】5. 左右滑動按鈕邏輯 ====================
+      const prevBtn = document.getElementById("slidePrev");
+      const nextBtn = document.getElementById("slideNext");
+      const scrollAmount = 304; // 每次滑動距離
+
+      if (prevBtn && nextBtn) {
+        prevBtn.addEventListener("click", () => {
+          slider.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+        });
+
+        nextBtn.addEventListener("click", () => {
+          slider.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        });
+      }
+
+      // ==================== 【新增】6. 內頁彈窗 (Modal) 與放大 (Lightbox) 邏輯 ====================
+      const modal = document.getElementById("portfolioModal");
+      const lightbox = document.getElementById("lightbox");
+
+      // 打開內頁
+      function openModal(id) {
+        const itemData = globalPortfolioData.find((item) => item.id === id);
+        if (!itemData) return;
+
+        // 寫入標題與描述
+        document.getElementById("modalTitle").textContent = itemData.title;
+        document.getElementById("modalDesc").textContent =
+          itemData.description || "暫無說明";
+
+        // 寫入並渲染畫廊圖片
+        const galleryContainer = document.getElementById("modalGallery");
+        galleryContainer.innerHTML = ""; // 先清空舊內容
+
+        if (itemData.gallery && Array.isArray(itemData.gallery)) {
+          itemData.gallery.forEach((imgUrl) => {
+            const imgElement = document.createElement("img");
+            imgElement.src = imgUrl;
+            // 點擊內頁圖片時放大
+            imgElement.onclick = (e) => {
+              e.stopPropagation(); // 阻止事件冒泡
+              openLightbox(imgUrl);
+            };
+            galleryContainer.appendChild(imgElement);
+          });
+        }
+
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden"; // 鎖定背景不讓它跟著滾動
+      }
+
+      // 關閉內頁
+      document.getElementById("closeModal").onclick = () => {
+        modal.classList.remove("active");
+        document.body.style.overflow = "auto"; // 解除背景滾動鎖定
+      };
+
+      // 打開放大預覽
+      function openLightbox(imgUrl) {
+        document.getElementById("lightboxImg").src = imgUrl;
+        lightbox.classList.add("active");
+      }
+
+      // 關閉放大預覽
+      document.getElementById("closeLightbox").onclick = () => {
+        lightbox.classList.remove("active");
+      };
+
+      // 點擊灰暗背景也能關閉視窗 (提升 UX)
+      window.onclick = (e) => {
+        if (e.target === modal) {
+          modal.classList.remove("active");
+          document.body.style.overflow = "auto";
+        }
+        if (e.target === lightbox) {
+          lightbox.classList.remove("active");
+        }
+      };
+    </script>
+  </body>
 </html>
