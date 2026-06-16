@@ -541,6 +541,25 @@ h3,
     pointer-events: auto;
 }
 
+/* ==================== 彈窗內的放大提示 ==================== */
+.zoom-hint {
+    font-size: 0.85rem;
+    color: #A99E93;
+    /* 配合韓系的淡褐色 */
+    margin-bottom: 15px;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.8;
+}
+
+.zoom-hint svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+}
+
 /* ==================== 手機版響應式設計 (加入漢堡選單邏輯) ==================== */
 @media (max-width: 768px) {
     .hero-content h1 {
