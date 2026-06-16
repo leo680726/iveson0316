@@ -381,7 +381,7 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
 
-// ==================== 【新增】7. 表單送出並轉跳 LINE 邏輯 ====================
+// ==================== 7. 表單送出並轉跳 LINE 邏輯 (測試版) ====================
       const bookingForm = document.getElementById('bookingForm');
 
       bookingForm.addEventListener('submit', function(event) {
@@ -396,23 +396,16 @@
         const time = document.getElementById('time').value;
 
         // 2. 將資料組合成 LINE 的文字訊息格式
-        const lineMessage = `【預約需求】\n姓名：${name}\n電話：${phone}\n項目：${service}\n日期：${date}\n時間：${time}\n\n您好，我想預約以上時段，再麻煩幫我確認是否可以，謝謝！`;
+        const lineMessage = `【預約需求測試】\n姓名：${name}\n電話：${phone}\n項目：${service}\n日期：${date}\n時間：${time}\n\n這是一筆測試預約單！`;
 
         // 3. 將文字進行 URL 編碼 (確保中文和符號能正確傳輸)
         const encodedMessage = encodeURIComponent(lineMessage);
 
-        // 4. 設定 LINE 官方帳號的 ID (請替換成朋友沙龍的 LINE ID)
-        // 注意：官方帳號 ID 通常開頭有 @，例如 @1234abcd
-        const lineID = '@你的LINE官方帳號ID'; 
+        // 4. 【測試專用】使用 LINE 通用分享網址
+        // 這樣寫的話，LINE 打開後會問你要把這段文字傳給誰
+        const lineURL = `https://line.me/R/msg/text/?${encodedMessage}`;
 
-        // 5. 組合最終的 LINE 喚醒網址
-        // 若使用官方帳號，語法為: https://line.me/R/oaMessage/{LINE_ID}/?{文字}
-        const lineURL = `https://line.me/R/oaMessage/${lineID}/?${encodedMessage}`;
-
-        // 若設計師沒有官方帳號，只有「個人 LINE」，請改用以下通用分享網址：
-        // const lineURL = `https://line.me/R/msg/text/?${encodedMessage}`;
-
-        // 6. 新開分頁轉跳至 LINE
+        // 5. 新開分頁轉跳至 LINE
         window.open(lineURL, '_blank');
       });
     </script>
