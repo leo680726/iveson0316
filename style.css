@@ -479,6 +479,67 @@ h3,
     right: 30px;
 }
 
+/* ==================== 浮動按鈕 (社群與回到頁頂) ==================== */
+.floating-widgets {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+    /* 確保浮在最上層 */
+}
+
+.widget-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #E5E0DA;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+
+/* SVG 圖示大小控制 */
+.widget-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+}
+
+.widget-btn:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+    transform: translateY(-4px);
+    /* 懸停時微微上浮 */
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 15px rgba(212, 187, 163, 0.4);
+}
+
+/* 回到頁頂按鈕：預設隱藏，透過 JS 加入 .show 類別來顯示 */
+.top-btn {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    /* 隱藏時不可點擊 */
+    margin-top: 10px;
+    /* 和社群按鈕稍微拉開一點距離 */
+}
+
+.top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
 /* ==================== 手機版響應式設計 (加入漢堡選單邏輯) ==================== */
 @media (max-width: 768px) {
     .hero-content h1 {
@@ -559,4 +620,20 @@ h3,
     .hamburger.active span:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
     }
+
+    .floating-widgets {
+            bottom: 20px;
+            right: 20px;
+            gap: 10px;
+    }
+    
+    .widget-btn {
+            width: 40px;
+            height: 40px;
+    }
+    
+    .widget-btn svg {
+            width: 18px;
+            height: 18px;
+     }
 }
