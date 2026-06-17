@@ -148,7 +148,10 @@
                 <input type="time" id="time" required>
               </div>
             </div>
-
+            <div class="form-group">
+              <label for="notes">備註事項 (50字內)</label>
+              <textarea id="notes" maxlength="50" rows="3" placeholder="例如：是否有特殊頭皮狀況、偏好安靜等（選填）..."></textarea>
+            </div>
             <button type="submit" class="btn-primary form-submit-btn">傳送預約至 LINE</button>
           </form>
         </div>
@@ -385,7 +388,6 @@
       const bookingForm = document.getElementById('bookingForm');
 
       bookingForm.addEventListener('submit', function(event) {
-        // 阻止表單預設的重整送出行為
         event.preventDefault();
 
         // 1. 取得使用者填寫的資料
@@ -394,15 +396,17 @@
         const service = document.getElementById('service').value;
         const date = document.getElementById('date').value;
         const time = document.getElementById('time').value;
+        
+        // 💡【新增】取得備註欄資料，如果沒寫就預設顯示「無」
+        const notes = document.getElementById('notes').value.trim() || '無';
 
-        // 2. 將資料組合成 LINE 的文字訊息格式
-        const lineMessage = `【預約需求測試】\n姓名：${name}\n電話：${phone}\n項目：${service}\n日期：${date}\n時間：${time}\n\n這是一筆測試預約單！`;
+        // 2. 将資料組合成 LINE 的文字訊息格式 (補上備註欄位)
+        const lineMessage = `【預約需求測試】\n姓名：${name}\n電話：${phone}\n項目：${service}\n日期：${date}\n時間：${time}\n備註：${notes}\n\n這是一筆測試預約單！`;
 
-        // 3. 將文字進行 URL 編碼 (確保中文和符號能正確傳輸)
+        // 3. 將文字進行 URL 編碼
         const encodedMessage = encodeURIComponent(lineMessage);
 
-        // 4. 【測試專用】使用 LINE 通用分享網址
-        // 這樣寫的話，LINE 打開後會問你要把這段文字傳給誰
+        // 4. 使用 LINE 通用分享網址進行測試
         const lineURL = `https://line.me/R/msg/text/?${encodedMessage}`;
 
         // 5. 新開分頁轉跳至 LINE

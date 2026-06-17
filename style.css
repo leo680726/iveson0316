@@ -618,7 +618,8 @@ h3,
 }
 
 .booking-form input,
-.booking-form select {
+.booking-form select,
+.booking-form textarea {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #E5E0DA;
@@ -631,11 +632,20 @@ h3,
 }
 
 .booking-form input:focus,
-.booking-form select:focus {
+.booking-form select:focus,
+.booking-form textarea:focus {
     outline: none;
     border-color: var(--accent-color);
     box-shadow: 0 0 0 3px rgba(212, 187, 163, 0.2);
     background-color: #fff;
+}
+
+/* 💡【新增】單獨針對備註框限制高度與禁止隨意拉伸 */
+.booking-form textarea {
+    resize: none;
+    /* 禁止使用者用滑鼠拖動右下角改變大小 */
+    height: 90px;
+    /* 固定舒適的高度 */
 }
 
 .form-submit-btn {
