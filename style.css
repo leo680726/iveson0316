@@ -17,6 +17,8 @@
 /* 啟用平滑捲動，點擊導覽列時會有滑順的視覺體驗 */
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+        /* 👈 新增這行，數值約為你導覽列的高度 */
 }
 
 body {
